@@ -1,27 +1,20 @@
 package org.automationframework;
 
+import org.automationframework.TestComponents.BaseTest;
 import org.automationframework.pageobjects.*;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
-import java.time.Duration;
+import java.io.IOException;
 
-public class PlaceOrderTest {
-    public static void main(String[] args) {
+public class PlaceOrderTest extends BaseTest {
+
+    @Test
+    public void placeOrder() throws IOException {
 
         String expectedProduct = "ADIDAS ORIGINAL";
 
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--incognito", "start-maximized");
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-
-        LandingPage landingPage = new LandingPage(driver);
-        landingPage.openLandingPage();
         ProductsCatalogue productsCatalogue = landingPage.loginApplication("akash12345@gmail.com", "Akash@123");
 
         productsCatalogue.addProductToCart(expectedProduct);
@@ -33,7 +26,7 @@ public class PlaceOrderTest {
 
         checkout.selectCountry("india");
         OrderConfirmationPage orderConfirmation = checkout.placeOrder();
-        
+
         String orderConfirmMessage = orderConfirmation.getOrderConfirmationMessage();
         Assert.assertTrue(orderConfirmMessage.equalsIgnoreCase("Thankyou for the order."));
         orderConfirmation.getOrderIds();
