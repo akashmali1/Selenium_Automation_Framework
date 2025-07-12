@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -11,10 +12,14 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.List;
 
-public class AutomationTest {
+public class StandAloneTest {
     public static void main(String[] args) {
+
         String expectedProduct = "ADIDAS ORIGINAL";
-        WebDriver driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--incognito", "start-maximized");
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.get("https://rahulshettyacademy.com/client");
         driver.findElement(By.id("userEmail")).sendKeys("akash12345@gmail.com");
@@ -36,15 +41,17 @@ public class AutomationTest {
         List<WebElement> cartProducts = driver.findElements(By.cssSelector(".cartWrap h3 "));
         boolean isExpectedProductFound = cartProducts.stream().anyMatch(product -> product.getText().equalsIgnoreCase(expectedProduct));
         Assert.assertTrue(isExpectedProductFound);
-        driver.findElement(By.xpath("//button[text()='Checkout']")).click();
+        driver.findElement(By.xpath("//button[text()='CheckoutPage']")).click();
         driver.findElement(By.xpath("//input[@placeholder='Select Country']")).sendKeys("ind");
         WebElement selectCountry = driver.findElement(By.xpath("//span[text()= \" India\"]"));
         wait.until(ExpectedConditions.visibilityOf(selectCountry));
         selectCountry.click();
         driver.findElement(By.partialLinkText("PLACE")).click();
 
+        String orderConfirmMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
+        Assert.assertTrue(orderConfirmMessage.equalsIgnoreCase("Thankyou for the order."));
         List<WebElement> orderIds = driver.findElements(By.xpath("//tr/td/label[@class='ng-star-inserted']"));
-        orderIds.forEach(orderId -> System.out.println(orderId.getText().replace("|", "").trim()));
+        orderIds.forEach(orderId -> System.out.println("Order Id : " + orderId.getText().replace("|", "").trim()));
 
         driver.quit();
     }
