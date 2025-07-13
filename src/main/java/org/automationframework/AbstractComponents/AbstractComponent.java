@@ -1,6 +1,7 @@
 package org.automationframework.AbstractComponents;
 
 import org.automationframework.pageobjects.MyCartPage;
+import org.automationframework.pageobjects.OrdersPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,6 +27,9 @@ public class AbstractComponent {
     @FindBy(css = "[routerlink*='cart']")
     WebElement cartBtn;
 
+    @FindBy(css = "[routerlink*='myorders']")
+    WebElement ordersBtn;
+
     public void waitForElementToAppear(By webElementLocator) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(webElementLocator));
     }
@@ -41,5 +45,10 @@ public class AbstractComponent {
     public MyCartPage openCart() {
         cartBtn.click();
         return new MyCartPage(driver);
+    }
+
+    public OrdersPage openOrders() {
+        ordersBtn.click();
+        return new OrdersPage(driver);
     }
 }

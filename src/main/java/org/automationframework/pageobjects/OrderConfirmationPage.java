@@ -28,7 +28,7 @@ public class OrderConfirmationPage extends AbstractComponent {
         return orderPlacedMessage.getText();
     }
 
-    public void getOrderIds() {
-        allOrderIds.forEach(orderId -> System.out.println("Order Id : " + orderId.getText().replace("|", "").trim()));
+    public String getOrderIds() {
+        return allOrderIds.stream().map(WebElement::getText).findFirst().orElse("");
     }
 }

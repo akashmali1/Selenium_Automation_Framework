@@ -6,14 +6,13 @@ import org.automationframework.pageobjects.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
 public class PlaceOrderTest extends BaseTest {
 
-    @Test
-    public void placeOrder() throws IOException {
+    String orderId = "";
+    String expectedProduct = "ADIDAS ORIGINAL";
 
-        String expectedProduct = "ADIDAS ORIGINAL";
+    @Test
+    public void placeOrderTest() {
 
         ProductsCatalogue productsCatalogue = landingPage.loginApplication("akash12345@gmail.com", "Akash@123");
 
@@ -29,8 +28,14 @@ public class PlaceOrderTest extends BaseTest {
 
         String orderConfirmMessage = orderConfirmation.getOrderConfirmationMessage();
         Assert.assertTrue(orderConfirmMessage.equalsIgnoreCase("Thankyou for the order."));
-        orderConfirmation.getOrderIds();
+        orderId = orderConfirmation.getOrderIds();
 
-        driver.quit();
+    }
+
+    @Test(dependsOnMethods = {"placeOrderTest"})
+    public void verifyPlacedOrderTest() {
+        ProductsCatalogue productsCatalogue = landingPage.loginApplication("akash12345@gmail.com", "Akash@123");
+        OrdersPage orders = productsCatalogue.openOrders();
+        Assert.assertTrue(orders.isOrderIdFound(expectedProduct, orderId));
     }
 }
