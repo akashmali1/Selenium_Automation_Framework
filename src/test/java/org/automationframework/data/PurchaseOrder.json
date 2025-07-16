@@ -1,0 +1,12 @@
+[
+  {
+    "email": "akash12345@gmail.com",
+    "password": "Akash@123",
+    "expectedProduct": "ADIDAS ORIGINAL"
+  },
+  {
+    "email": "akash12345@gmail.com",
+    "password": "Akash@123",
+    "expectedProduct": "ADIDAS ORIGINAL"
+  }
+]
