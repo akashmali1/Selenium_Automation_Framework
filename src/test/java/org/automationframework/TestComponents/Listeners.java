@@ -14,18 +14,21 @@ import java.io.IOException;
 public class Listeners extends BaseTest implements ITestListener {
     ExtentReports reports = ExtentReporterNG.getReportObject();
     ExtentTest test;
+    ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
     public void onTestStart(ITestResult result) {
 
         test = reports.createTest(result.getMethod().getMethodName());
+        extentTest.set(test);
     }
 
     public void onTestSuccess(ITestResult result) {
-        test.pass(result.getMethod().getMethodName() + " passed");
+        //test = extentTest.get();
+        extentTest.get().pass(result.getMethod().getMethodName() + " passed");
     }
 
     public void onTestFailure(ITestResult result) {
-        test.fail(result.getThrowable());
+        extentTest.get().fail(result.getThrowable());
         String filePath;
         try {
             driver = (WebDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());

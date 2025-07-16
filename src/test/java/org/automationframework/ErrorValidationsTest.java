@@ -1,6 +1,7 @@
 package org.automationframework;
 
 import org.automationframework.TestComponents.BaseTest;
+import org.automationframework.TestComponents.Retry;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,7 +15,7 @@ public class ErrorValidationsTest extends BaseTest {
 
     }
 
-    @Test(groups = {"Error Handling"})
+    @Test(groups = {"Error Handling"}, retryAnalyzer = Retry.class)
     public void verifyIncorrectPasswordErrorMessage() {
 
         landingPage.loginApplication("akash12345@gmail.com", "dfgg@123");
