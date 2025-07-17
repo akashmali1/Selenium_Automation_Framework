@@ -18,10 +18,10 @@ public class CheckoutPage extends AbstractComponent {
     }
 
     @FindBy(xpath = "//input[@placeholder='Select Country']")
-    WebElement selectCountry;
+    private WebElement selectCountry;
 
     @FindBy(partialLinkText = "PLACE")
-    WebElement placeOrderLink;
+    private WebElement placeOrderLink;
 
     public void selectCountry(String country) {
         selectCountry.sendKeys(country);

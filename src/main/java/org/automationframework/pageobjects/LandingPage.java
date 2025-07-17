@@ -17,16 +17,16 @@ public class LandingPage extends AbstractComponent {
     }
 
     @FindBy(id = "userEmail")
-    WebElement emailField;
+    private WebElement emailField;
 
     @FindBy(id = "userPassword")
-    WebElement passwordField;
+    private WebElement passwordField;
 
     @FindBy(name = "login")
-    WebElement loginBtn;
+    private WebElement loginBtn;
 
     @FindBy(css = "[class*='flyInOut']")
-    WebElement errorMessage;
+    private WebElement errorMessage;
 
     public void openLandingPage() {
         driver.get("https://rahulshettyacademy.com/client");

@@ -19,10 +19,10 @@ public class OrderConfirmationPage extends AbstractComponent {
     }
 
     @FindBy(css = ".hero-primary")
-    WebElement orderPlacedMessage;
+    private WebElement orderPlacedMessage;
 
     @FindBy(xpath = "//tr/td/label[@class='ng-star-inserted']")
-    List<WebElement> allOrderIds;
+    private List<WebElement> allOrderIds;
 
     public String getOrderConfirmationMessage() {
         return orderPlacedMessage.getText();

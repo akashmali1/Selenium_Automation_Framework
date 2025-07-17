@@ -20,16 +20,16 @@ public class ProductsCatalogue extends AbstractComponent {
     }
 
     @FindBy(css = ".col-lg-4")
-    List<WebElement> products;
+    private List<WebElement> products;
 
     @FindBy(css = ".ng-animating")
-    WebElement productAddedToCartAnimation;
+    private WebElement productAddedToCartAnimation;
 
-    By productsLocator = By.cssSelector(".col-lg-4");
+    private By productsLocator = By.cssSelector(".col-lg-4");
 
-    By addToCartBtn = By.cssSelector("button:last-child");
+    private By addToCartBtn = By.cssSelector("button:last-child");
 
-    By productAddedToCartToastMsg = By.cssSelector("#toast-container");
+    private By productAddedToCartToastMsg = By.cssSelector("#toast-container");
 
     public List<WebElement> getProductsList() {
         waitForElementToAppear(productsLocator);

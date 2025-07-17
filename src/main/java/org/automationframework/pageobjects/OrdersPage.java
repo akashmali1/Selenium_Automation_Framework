@@ -21,7 +21,7 @@ public class OrdersPage extends AbstractComponent {
     }
 
     @FindBy(xpath = "//tr[@class='ng-star-inserted']")
-    List<WebElement> allOrdersList;
+    private List<WebElement> allOrdersList;
 
     public boolean isOrderIdFound(String productName, String orderId) {
 

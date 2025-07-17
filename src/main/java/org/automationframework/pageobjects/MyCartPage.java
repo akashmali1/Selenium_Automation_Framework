@@ -20,12 +20,12 @@ public class MyCartPage extends AbstractComponent {
     }
 
     @FindBy(css = ".cartWrap h3")
-    List<WebElement> allCartProducts;
+   private List<WebElement> allCartProducts;
 
     @FindBy(xpath = "//button[text()='Checkout']")
-    WebElement checkoutBtn;
+    private WebElement checkoutBtn;
 
-    By cartProductsLocator = By.cssSelector(".cartWrap h3");
+    private By cartProductsLocator = By.cssSelector(".cartWrap h3");
 
     public boolean isExpectedProductFoundInCart(String expectedProduct) {
         waitForElementToAppear(cartProductsLocator);
