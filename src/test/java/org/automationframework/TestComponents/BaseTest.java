@@ -3,6 +3,7 @@ package org.automationframework.TestComponents;
 import org.apache.commons.io.FileUtils;
 import org.automationframework.data.DataReader;
 import org.automationframework.pageobjects.LandingPage;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -33,23 +34,35 @@ public class BaseTest {
         Properties properties = new Properties();
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "/src/main/java/org/automationframework/resources/GlobalData.properties");
         properties.load(fis);
-        String browserName = properties.getProperty("browser");
 
-        if (browserName.equalsIgnoreCase("chrome")) {
+        String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : properties.getProperty("browser");
+
+        if (browserName.contains("chrome")) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--incognito", "start-maximized");
+            if (browserName.contains("headless")) {
+                options.addArguments("--headless=new");
+            }
             driver = new ChromeDriver(options);
-        } else if (browserName.equalsIgnoreCase("edge")) {
+
+        } else if (browserName.contains("edge")) {
             EdgeOptions options = new EdgeOptions();
             options.addArguments("--incognito", "start-maximized");
+            if (browserName.contains("headless")) {
+                options.addArguments("--headless=new");
+            }
             driver = new EdgeDriver(options);
-        } else if (browserName.equalsIgnoreCase("firefox")) {
+        } else if (browserName.contains("firefox")) {
             FirefoxOptions options = new FirefoxOptions();
-            options.addArguments("--incognito", "start-maximized");
-            driver = new FirefoxDriver(options);
+            if (browserName.contains("headless")) {
+                options.addArguments("-headless");
+            }
+            driver = new FirefoxDriver();
+            driver.manage().window().maximize();
         }
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().window().setSize(new Dimension(1440, 900));
         return driver;
     }
 
